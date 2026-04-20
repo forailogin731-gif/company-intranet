@@ -1,0 +1,24 @@
+{
+  "overview": "A professional and elegant company intranet portal featuring a sidebar navigation, header bar with search and notifications, dashboard with announcements and quick links, employee directory, and announcements page — all with dark mode and responsive layout.",
+  "features": [
+    "Sidebar navigation with collapsible state and company logo",
+    "Top header bar with search, notifications, and user avatar dropdown",
+    "Dashboard with announcement banner, quick-links grid, and company news feed",
+    "Employee directory with search, department filter, and profile cards",
+    "Announcements page with full detail view",
+    "Dark mode toggle with persistent preference",
+    "Responsive mobile-first layout",
+    "Sample data for all sections"
+  ],
+  "category": "productivity",
+  "tags": [
+    "intranet",
+    "dashboard",
+    "employee-directory",
+    "company",
+    "productivity",
+    "dark-mode",
+    "responsive"
+  ],
+  "last_updated": "2026-04-20T03:14:41.234Z"
+}
