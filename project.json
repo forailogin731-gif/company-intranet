@@ -1,24 +1,33 @@
 {
-  "overview": "A professional and elegant company intranet portal featuring a sidebar navigation, header bar with search and notifications, dashboard with announcements and quick links, employee directory, and announcements page — all with dark mode and responsive layout.",
+  "overview": "A professional, elegant company intranet for a sheet-metal press component manufacturer. Includes 13 department portals (Accounts, Finance, HR, IT, Maintenance, NPD, PPC, Production, Purchase, Quality, RM-Purchase, Stores, Tool-Room) with manufacturing-specific dashboards, KPI metrics, equipment tracking, and a modernized design system.",
   "features": [
-    "Sidebar navigation with collapsible state and company logo",
-    "Top header bar with search, notifications, and user avatar dropdown",
-    "Dashboard with announcement banner, quick-links grid, and company news feed",
-    "Employee directory with search, department filter, and profile cards",
-    "Announcements page with full detail view",
+    "13 department-specific dashboards with manufacturing KPIs",
+    "Production dashboard with machine status, shift schedules, and output metrics",
+    "Quality dashboard with defect trends, SPC charts, and inspection checkpoints",
+    "Maintenance dashboard with equipment schedule, downtime alerts, and TPM calendar",
+    "Stores and Tool-Room inventory with stock levels and tool checkout logs",
+    "Purchase and RM-Purchase with PO status, vendor list, and lead times",
+    "HR attendance summary, leave approvals, and training calendar",
+    "Finance and Accounts expense approvals and budget tracking",
+    "NPD project status, design reviews, and BOM management",
+    "IT support tickets, system uptime, and asset inventory",
+    "Critical alert panel for production issues, maintenance, and quality holds",
     "Dark mode toggle with persistent preference",
-    "Responsive mobile-first layout",
-    "Sample data for all sections"
+    "Responsive design for desktop, tablet, and mobile",
+    "Employee directory with department filtering",
+    "Announcements and news feed per department"
   ],
   "category": "productivity",
   "tags": [
     "intranet",
+    "manufacturing",
     "dashboard",
-    "employee-directory",
-    "company",
-    "productivity",
-    "dark-mode",
-    "responsive"
+    "departments",
+    "production",
+    "quality",
+    "maintenance",
+    "hr",
+    "erp"
   ],
-  "last_updated": "2026-04-20T03:14:41.234Z"
+  "last_updated": "2026-04-20T03:50:11.299Z"
 }

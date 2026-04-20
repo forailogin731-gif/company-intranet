@@ -1,80 +1,71 @@
 # Design Brief
 
 ## Direction
-Cool Serene Professional — corporate intranet with light airy aesthetics, ocean-blue primary accents, and careful surface layering for digital clarity.
+Industrial-refined manufacturing intranet — dark steely blue foundation with warm brass accents. Professional, authoritative, department-aware. Dashboard-driven UI optimized for production workflows across 13 departments.
 
 ## Tone
-Refined minimalism with sophisticated restraint — no decoration, maximum information clarity, intentional breathing room throughout.
+Confident, efficient, modern — manufacturing context awareness without heaviness. Dark mode primary (industrial steel feel), card-based layouts with strategic micro-interactions.
 
 ## Differentiation
-Sidebar navigation with distinct card elevation, subtle surface hierarchy across structural zones, and professional serif headings paired with clean sans-serif body text.
+13-department card grid with warm-toned status badges, micro-depth shadows, department-specific color coding, loading states for data workflows, sidebar with manufacturing brand presence.
 
 ## Color Palette
 
-| Token      | OKLCH           | Role                          |
-|------------|-----------------|-------------------------------|
-| background | 0.98 0.008 230  | Clean off-white light canvas  |
-| foreground | 0.18 0.015 230  | Deep cool grey text           |
-| primary    | 0.42 0.14 240   | Ocean blue — trust, CTA       |
-| accent     | 0.6 0.15 170    | Cool teal — success, status   |
-| card       | 1.0 0.004 230   | Pure white elevated surfaces  |
-| muted      | 0.94 0.01 230   | Light grey backgrounds        |
-| border     | 0.9 0.008 230   | Subtle dividing lines         |
+| Token      | OKLCH           | Role                                |
+|------------|-----------------|-------------------------------------|
+| background | 0.95 0.01 230   | Light canvas (light mode)           |
+| foreground | 0.22 0.012 230  | Deep cool grey text (light mode)    |
+| primary    | 0.52 0.14 240   | Steel blue — CTAs, active states    |
+| accent     | 0.62 0.18 45    | Warm brass/copper — success, status |
+| card       | 0.98 0.006 230  | White elevated surfaces             |
+| muted      | 0.92 0.008 230  | Light grey backgrounds              |
+| border     | 0.88 0.008 230  | Subtle dividing lines               |
+
+## Dark Mode Palette
+
+| Token      | OKLCH           | Role                           |
+|------------|-----------------|--------------------------------|
+| background | 0.13 0.012 235  | Deep slate blue canvas         |
+| foreground | 0.92 0.008 230  | Bright cool white text         |
+| primary    | 0.78 0.14 240   | Bright steel blue — CTAs       |
+| accent     | 0.7 0.16 45     | Vivid brass — highlights       |
+| card       | 0.18 0.01 235   | Lifted dark surface            |
+| muted      | 0.25 0.01 235   | Dark grey backgrounds          |
 
 ## Typography
-
-- Display: Instrument Serif — headings, editorial hierarchy, refined aesthetic
-- Body: General Sans — UI labels, paragraphs, navigation, clean readability
-- Scale: hero `text-5xl md:text-7xl font-bold`, h2 `text-3xl font-semibold`, label `text-sm uppercase tracking-widest`, body `text-base leading-relaxed`
+Display: Instrument Serif — department headings, editorial confidence. Body: General Sans — UI labels, data, navigation. Scale: h1 `text-4xl font-bold`, h2 `text-2xl font-semibold`, label `text-sm uppercase tracking-wide`, body `text-base leading-relaxed`.
 
 ## Elevation & Depth
-
-Subtle shadows and card backgrounds create visual layering — sidebar uses distinct card background, header has bottom border, content sections alternate between background and muted backgrounds.
+Layered cards with strategic shadows (card: 0.2px 8px, elevated: 0.4px 12px). Sidebar distinct from header. Content sections alternate between background and muted surfaces. Dark mode uses reduced opacity for depth perception.
 
 ## Structural Zones
 
-| Zone    | Background        | Border              | Notes                        |
-|---------|-------------------|---------------------|------------------------------|
-| Sidebar | sidebar (card)    | sidebar-border      | Distinct card with divider   |
-| Header  | background        | border-b subtle     | Fixed, minimal visual weight |
-| Content | background        | —                   | Alternating muted zones      |
-| Footer  | muted/20          | border-t subtle     | Recessed, supporting info    |
-
-## Spacing & Rhythm
-
-Spacious vertical rhythm with 2rem gaps between major sections, 1rem gutters within cards, responsive mobile stacking with `sm:` breakpoints.
+| Zone    | Background       | Border           | Notes                                 |
+|---------|------------------|------------------|---------------------------------------|
+| Sidebar | sidebar card     | sidebar-border   | Dark mode: distinct raised surface    |
+| Header  | background       | border-b subtle  | Search, user menu, notifications     |
+| Content | background       | —                | Grid layout for department cards     |
+| Footer  | muted/10         | border-t subtle  | Company info, department quick-links |
 
 ## Component Patterns
-
-- Buttons: primary blue background, rounded-lg, hover with increased opacity
-- Cards: white bg-card, shadow-subtle, rounded-lg, hover with shadow-elevated
-- Badges: muted background with foreground text, rounded-full for status indicators
-- Inputs: bg-input border-border, focus:ring-primary, rounded-md
+- **Department Cards**: bg-card, shadow-card, warm accent badges, hover shadow-elevated
+- **Buttons**: primary steel-blue, accent warm-brass, rounded-lg, smooth transitions
+- **Status Indicators**: accent warm tones, muted backgrounds, mini badges (rounded-full)
+- **Data Tables**: alternating row backgrounds, clear typography hierarchy
+- **Inputs**: bg-input border-border, focus:ring-primary, rounded-md
 
 ## Motion
-
-- Entrance: fade-in with 0.2s on page load
-- Hover: smooth transition (0.3s) on all interactive elements
-- State change: quick feedback (0.15s) for toggles and selections
+- **Entrance**: fade-in 0.3s ease-out on page load
+- **Slide**: slide-in 0.3s on card appearance
+- **Hover**: smooth transition 0.3s on interactive elements, shadow elevation
+- **Loading**: pulse-subtle 2s loop for data states
 
 ## Constraints
-
 - Maintain AA+ contrast across light and dark modes
-- Use sidebar for primary navigation, header for search and user menu
-- Responsive mobile-first: stacked layout on `sm:`, two-column on `md:+`
-- No gradients or decorative backgrounds — pure surfaces
+- Sidebar navigation for departments, top header for global search/user
+- 13 department cards grid-responsive: 1 col (sm), 2–3 cols (md/lg)
+- Dark mode optimized (primary design mode); light mode supportive
+- No gradients or decorative patterns — pure surfaces with intentional shadows
 
 ## Signature Detail
-
-Professional serif display font (Instrument Serif) used sparingly for section headings to elevate the interface without decoration.
-
-# Dark Mode Tokens
-
-| Token      | OKLCH           | Role                          |
-|------------|-----------------|-------------------------------|
-| background | 0.145 0.014 230 | Deep dark charcoal            |
-| foreground | 0.95 0.01 230   | Bright cool white text        |
-| primary    | 0.72 0.15 200   | Bright teal — active, CTA     |
-| accent     | 0.65 0.18 155   | Vivid green — success         |
-| card       | 0.18 0.014 230  | Lifted dark surface           |
-| sidebar    | 0.18 0.014 230  | Sidebar card surface          |
+Warm brass/copper accents on manufacturing-context status indicators elevate the interface beyond generic corporate intranet. Department card grid with micro-shadows creates visual hierarchy without clutter. Instrument Serif sparingly on section headings anchors editorial authority.

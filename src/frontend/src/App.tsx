@@ -15,6 +15,7 @@ const AnnouncementsPage = lazy(() => import("./pages/Announcements"));
 const AnnouncementDetailPage = lazy(() => import("./pages/AnnouncementDetail"));
 const NewsPage = lazy(() => import("./pages/News"));
 const HelpPage = lazy(() => import("./pages/Help"));
+const DepartmentPage = lazy(() => import("./pages/Department"));
 
 function PageLoader() {
   return (
@@ -104,6 +105,16 @@ const helpRoute = createRoute({
   ),
 });
 
+const departmentRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/departments/$id",
+  component: () => (
+    <Suspense fallback={<PageLoader />}>
+      <DepartmentPage />
+    </Suspense>
+  ),
+});
+
 const routeTree = rootRoute.addChildren([
   indexRoute,
   directoryRoute,
@@ -112,6 +123,7 @@ const routeTree = rootRoute.addChildren([
   announcementDetailRoute,
   newsRoute,
   helpRoute,
+  departmentRoute,
 ]);
 
 const router = createRouter({ routeTree });

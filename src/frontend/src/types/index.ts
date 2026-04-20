@@ -39,12 +39,72 @@ export interface Announcement {
   isPinned: boolean;
 }
 
+export interface DepartmentKPI {
+  label: string;
+  value: string | number;
+  unit?: string;
+  trend?: "up" | "down" | "stable";
+  trendValue?: string;
+}
+
 export interface Department {
   id: string;
   name: string;
+  slug: string;
   headCount: number;
   lead: string;
   icon: string;
+  color: string;
+  bgColor: string;
+  description: string;
+  kpiSummary: DepartmentKPI[];
+}
+
+export interface WorkOrder {
+  id: string;
+  title: string;
+  department: string;
+  assignedTo: string;
+  priority: "critical" | "high" | "medium" | "low";
+  status: "open" | "in-progress" | "completed" | "on-hold";
+  dueDate: string;
+  client: string;
+  partNumber: string;
+  quantity: number;
+}
+
+export interface Equipment {
+  id: string;
+  name: string;
+  type: string;
+  department: string;
+  status: "operational" | "maintenance" | "breakdown" | "idle";
+  lastServiced: string;
+  nextService: string;
+  oee: number;
+}
+
+export interface Alert {
+  id: string;
+  title: string;
+  description: string;
+  department: string;
+  severity: "critical" | "warning" | "info";
+  timestamp: string;
+  isResolved: boolean;
+}
+
+export interface InventoryItem {
+  id: string;
+  name: string;
+  sku: string;
+  category: string;
+  quantity: number;
+  unit: string;
+  minStock: number;
+  location: string;
+  supplier: string;
+  lastUpdated: string;
 }
 
 export interface QuickLink {

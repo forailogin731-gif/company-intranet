@@ -15,13 +15,15 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { currentUser } from "@/data/mock";
-import { announcements } from "@/data/mock";
+import { alerts, currentUser, departments } from "@/data/mock";
 import { useDarkMode } from "@/hooks/use-dark-mode";
-import { Link } from "@tanstack/react-router";
+import { cn } from "@/lib/utils";
+import { Link, useNavigate } from "@tanstack/react-router";
 import {
+  AlertTriangle,
   Bell,
   ChevronDown,
+  Factory,
   LogOut,
   Menu,
   Moon,
@@ -29,6 +31,7 @@ import {
   Settings,
   Sun,
   User,
+  Zap,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -36,14 +39,20 @@ interface HeaderProps {
   onMobileMenuToggle: () => void;
 }
 
+const criticalAlerts = alerts.filter(
+  (a) => !a.isResolved && a.severity === "critical",
+);
+const allActiveAlerts = alerts.filter((a) => !a.isResolved);
+
 export function Header({ onMobileMenuToggle }: HeaderProps) {
   const { isDark, toggleTheme } = useDarkMode();
   const [searchQuery, setSearchQuery] = useState("");
+  const navigate = useNavigate();
 
-  const recentNotifications = announcements.slice(0, currentUser.notifications);
+  const alertCount = allActiveAlerts.length;
 
   return (
-    <header className="fixed top-0 right-0 left-0 z-30 h-16 bg-card border-b border-border shadow-subtle flex items-center gap-4 px-4 md:px-6">
+    <header className="fixed top-0 right-0 left-0 z-30 h-16 bg-card border-b border-border shadow-subtle flex items-center gap-3 px-4 md:px-6">
       {/* Mobile hamburger */}
       <Button
         data-ocid="header.mobile_menu_button"
@@ -57,18 +66,86 @@ export function Header({ onMobileMenuToggle }: HeaderProps) {
       </Button>
 
       {/* Search */}
-      <div className="flex-1 max-w-xl relative">
+      <div className="flex-1 max-w-md relative">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
         <Input
           data-ocid="header.search_input"
-          placeholder="Search for resources or people..."
+          placeholder="Search departments, employees..."
           className="pl-9 bg-background border-input text-sm h-9 w-full"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
       </div>
 
-      <div className="flex items-center gap-2 ml-auto">
+      <div className="flex items-center gap-1.5 ml-auto">
+        {/* Quick Department Switcher */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              data-ocid="header.dept_switcher_button"
+              variant="ghost"
+              size="sm"
+              className="hidden md:flex items-center gap-1.5 h-9 px-3 text-muted-foreground hover:text-foreground hover:bg-muted/50 border border-border/60"
+            >
+              <Factory className="h-4 w-4 text-accent" />
+              <span className="text-xs font-medium">Departments</span>
+              <ChevronDown className="h-3.5 w-3.5" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent
+            data-ocid="header.dept_switcher_dropdown"
+            className="w-56 max-h-80 overflow-y-auto"
+            align="end"
+          >
+            <DropdownMenuLabel className="text-xs text-muted-foreground uppercase tracking-wider">
+              Quick Navigate
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            {departments.map((dept) => (
+              <DropdownMenuItem
+                key={dept.id}
+                data-ocid={`header.dept_link.${dept.slug}`}
+                className="cursor-pointer gap-2"
+                onClick={() =>
+                  navigate({
+                    to: "/departments/$id",
+                    params: { id: dept.slug },
+                  })
+                }
+              >
+                <span
+                  className={cn(
+                    "text-xs font-mono font-semibold w-4",
+                    dept.color,
+                  )}
+                >
+                  {dept.name.charAt(0)}
+                </span>
+                <span className="text-sm">{dept.name}</span>
+                <Badge
+                  variant="outline"
+                  className="ml-auto text-[10px] h-4 px-1"
+                >
+                  {dept.headCount}
+                </Badge>
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        {/* Critical Alert Indicator */}
+        {criticalAlerts.length > 0 && (
+          <div
+            data-ocid="header.critical_alerts"
+            className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-destructive/10 border border-destructive/20 animate-pulse-subtle"
+          >
+            <Zap className="h-3.5 w-3.5 text-destructive" />
+            <span className="text-xs font-semibold text-destructive">
+              {criticalAlerts.length} Critical
+            </span>
+          </div>
+        )}
+
         {/* Notification Bell */}
         <Popover>
           <PopoverTrigger asChild>
@@ -76,46 +153,59 @@ export function Header({ onMobileMenuToggle }: HeaderProps) {
               data-ocid="header.notifications_button"
               variant="ghost"
               size="icon"
-              className="relative h-9 w-9 text-foreground"
+              className="relative h-9 w-9 text-foreground hover:bg-muted/50"
             >
-              <Bell className="h-5 w-5" />
-              {currentUser.notifications > 0 && (
-                <Badge className="absolute -top-1 -right-1 h-5 w-5 p-0 flex items-center justify-center text-[10px] bg-primary text-primary-foreground rounded-full border-2 border-card">
-                  {currentUser.notifications}
+              <Bell className="h-4.5 w-4.5" />
+              {alertCount > 0 && (
+                <Badge className="absolute -top-1 -right-1 h-5 w-5 p-0 flex items-center justify-center text-[10px] bg-destructive text-destructive-foreground rounded-full border-2 border-card font-bold">
+                  {alertCount}
                 </Badge>
               )}
             </Button>
           </PopoverTrigger>
           <PopoverContent
             data-ocid="header.notifications_popover"
-            className="w-80 p-0"
+            className="w-84 p-0"
             align="end"
           >
             <div className="px-4 py-3 border-b border-border flex items-center justify-between">
-              <span className="font-semibold text-sm text-foreground">
-                Notifications
-              </span>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="text-xs text-primary h-7 px-2"
-              >
-                Mark all read
-              </Button>
+              <div className="flex items-center gap-2">
+                <AlertTriangle className="h-4 w-4 text-destructive" />
+                <span className="font-semibold text-sm text-foreground">
+                  Plant Alerts
+                </span>
+              </div>
+              <Badge variant="destructive" className="text-[10px] h-5">
+                {alertCount} active
+              </Badge>
             </div>
             <div className="divide-y divide-border max-h-80 overflow-y-auto">
-              {recentNotifications.map((notif, i) => (
+              {allActiveAlerts.map((alert, i) => (
                 <div
-                  key={notif.id}
-                  data-ocid={`header.notification.item.${i + 1}`}
+                  key={alert.id}
+                  data-ocid={`header.alert.item.${i + 1}`}
                   className="px-4 py-3 hover:bg-muted/50 transition-colors cursor-pointer"
                 >
-                  <p className="text-sm font-medium text-foreground line-clamp-1">
-                    {notif.title}
-                  </p>
-                  <p className="text-xs text-muted-foreground mt-0.5">
-                    {notif.category}
-                  </p>
+                  <div className="flex items-start gap-2">
+                    <div
+                      className={cn(
+                        "mt-0.5 h-2 w-2 rounded-full flex-shrink-0",
+                        alert.severity === "critical"
+                          ? "bg-destructive"
+                          : alert.severity === "warning"
+                            ? "bg-accent"
+                            : "bg-chart-5",
+                      )}
+                    />
+                    <div className="min-w-0">
+                      <p className="text-sm font-medium text-foreground line-clamp-1">
+                        {alert.title}
+                      </p>
+                      <p className="text-xs text-muted-foreground mt-0.5">
+                        {alert.department}
+                      </p>
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
@@ -126,7 +216,7 @@ export function Header({ onMobileMenuToggle }: HeaderProps) {
                   size="sm"
                   className="w-full text-xs text-primary h-7"
                 >
-                  View all announcements
+                  View all announcements →
                 </Button>
               </Link>
             </div>
@@ -141,9 +231,9 @@ export function Header({ onMobileMenuToggle }: HeaderProps) {
               variant="ghost"
               className="flex items-center gap-2 h-9 px-2 text-foreground hover:bg-muted/50"
             >
-              <Avatar className="h-8 w-8">
+              <Avatar className="h-8 w-8 ring-2 ring-primary/20">
                 <AvatarImage src={currentUser.avatar} alt={currentUser.name} />
-                <AvatarFallback className="bg-primary text-primary-foreground text-xs font-semibold">
+                <AvatarFallback className="bg-primary text-primary-foreground text-xs font-bold">
                   {currentUser.name
                     .split(" ")
                     .map((n) => n[0])
@@ -151,19 +241,19 @@ export function Header({ onMobileMenuToggle }: HeaderProps) {
                 </AvatarFallback>
               </Avatar>
               <div className="hidden md:flex flex-col items-start min-w-0">
-                <span className="text-sm font-medium text-foreground truncate max-w-[120px]">
+                <span className="text-sm font-semibold text-foreground truncate max-w-[120px]">
                   {currentUser.name}
                 </span>
-                <span className="text-xs text-muted-foreground truncate max-w-[120px]">
+                <span className="text-[11px] text-muted-foreground truncate max-w-[120px]">
                   {currentUser.role}
                 </span>
               </div>
-              <ChevronDown className="h-4 w-4 text-muted-foreground hidden md:block" />
+              <ChevronDown className="h-3.5 w-3.5 text-muted-foreground hidden md:block" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent
             data-ocid="header.user_dropdown"
-            className="w-52"
+            className="w-56"
             align="end"
           >
             <DropdownMenuLabel className="font-normal">
